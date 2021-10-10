@@ -16,7 +16,7 @@ global Si;
 global Sg;
 global G_0;
 
-T = readtable('Dat_IVGTT_SN.csv');
+T = readtable('Dat_IVGTT_RI.csv');
 ar = table2array(T);
 time = ar(:,1);
 glucose = ar(:,2);
@@ -31,7 +31,7 @@ Gb = glucose(1);
 %% ga
 numCycle = 100;                           % pocet cyklov hladania
 popSize = 50;                              % velkost  populacie - kolko retazcov naraz testujem
-Space = [ones(1,4)*1e-15;[1e-3,1e-12,0.1,20]];
+Space = [ones(1,4)*1e-10;[1,1,1,20]];
 Amp = ones(1,4)*0.05;                          % rozsah pre aditivnu mutaciu
 
 pop = genrpop(popSize,Space);              % generovanie n- nahodnych retazcov 
@@ -64,5 +64,5 @@ for i=1:numCycle
     minFit
 end
 
-save(strcat("params3",".mat"),'Best','grafFit');
+save(strcat("paramsRI",".mat"),'Best','grafFit');
 
