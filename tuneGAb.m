@@ -14,8 +14,8 @@ global p2
 [a ~] = size(pop);
 fit = zeros(1,a);
 for i=1:a      
-    Si = pop(i,1) / 1000;
-    p2 = pop(i,2) / 1000;
+    Si = pop(i,1) / 10;
+    p2 = pop(i,2) / 10;
     try
         dat = sim('bergmanGA');
         e_2 = sum(dat.fitness.^2);

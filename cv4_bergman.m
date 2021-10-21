@@ -20,6 +20,13 @@ xlabel('Cas [min]');
 ylabel('[mg/kg/min]');
 plot(T2,I2,'ok');
 
+figure(2)
+title('Toky glukozy')
+hold on
+xlabel('Cas [min]');
+ylabel('[mg/kg/min]');
+plot(T2,I2,'ok');
+
 
 %% vzorove data
 TI = 44.55;
@@ -36,11 +43,22 @@ Sg = 0;
 Vg = 1.467;
 Gb = 153;
 s1 = sim('bergman');
-plot(s1.product);
+figure(1)
 plot(s1.int);
-legend('PD','Ra(t)','V_GX(t)G(t)');
-
 figure(2)
+plot(s1.product);
+load('paramsFull1');
+Si = Best(1) / 10;
+p2 = Best(2) / 10;
+s1 = sim('bergman');
+figure(1)
+plot(s1.int);
+legend('PD','V_GX(t)G(t)','V_GX(t)G(t)[GA]');
+figure(2)
+plot(s1.product);
+legend('PD','Ra(t)','Ra(t)[GA]');
+
+figure(3)
 hold on
 title('Glykemia');
 

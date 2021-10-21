@@ -30,8 +30,14 @@ S2b = S1b;
 Ib = 12.3165;
 s1 = sim('cv4model');
 plot(s1.I);
+load('paramsI');
+TI = Best(1);
+kI = Best(2);
+VI = Best(3);
+s1 = sim('cv4model');
+plot(s1.I,'k');
 yyaxis right
 plot(s1.v);
 ylabel("v(t) [\muU/kg/min]")
-legend('namerane','model','v(t)');
+legend('namerane','model','identifikovany','v(t)');
 

@@ -46,7 +46,7 @@ global p2
 %% ga
 numCycle = 100;                           % pocet cyklov hladania
 popSize = 50;                              % velkost  populacie - kolko retazcov naraz testujem
-Space = [ones(1,2)*0;[10,10]];
+Space = [ones(1,2)*0;[1,1]];
 Amp = ones(1,4)*0.05;                          % rozsah pre aditivnu mutaciu
 
 pop = genrpop(popSize,Space);              % generovanie n- nahodnych retazcov 
@@ -79,11 +79,11 @@ for i=1:numCycle
     minFit
 end
 
-save(strcat("paramsFull",".mat"),'Best','grafFit');
+save(strcat("paramsFull1",".mat"),'Best','grafFit');
 
 %berg
-Si = Best(1) / 1000;
-p2 = Best(2) / 1000;
+Si = Best(1) / 10;
+p2 = Best(2) / 10;
 s1 = sim('bergman');
 plot(s1.product);
 plot(s1.int);
