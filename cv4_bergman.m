@@ -27,6 +27,9 @@ xlabel('Cas [min]');
 ylabel('[mg/kg/min]');
 plot(T2,I2,'ok');
 
+figure(3)
+hold on
+title('Glykemia');
 
 %% vzorove data
 TI = 44.55;
@@ -47,24 +50,25 @@ figure(1)
 plot(s1.int);
 figure(2)
 plot(s1.product);
+figure(3)
+s1.G.Data = s1.G.Data/18;
+plot(s1.G);
 load('paramsFull1');
 Si = Best(1) / 10;
 p2 = Best(2) / 10;
 s1 = sim('bergman');
 figure(1)
 plot(s1.int);
-legend('PD','V_GX(t)G(t)','V_GX(t)G(t)[GA]');
+legend('PD','Ra(t)','Ra(t)[GA]');
 figure(2)
 plot(s1.product);
-legend('PD','Ra(t)','Ra(t)[GA]');
+legend('PD','V_GX(t)G(t)','V_GX(t)G(t)[GA]');
 
 figure(3)
-hold on
-title('Glykemia');
 
 s1.G.Data = s1.G.Data/18;
 plot(s1.G);
 plot([0,600],[Gb Gb]/18,'--');
-legend('G(t)','Gb');
+legend('G(t)','G(t)[GA]','Gb');
 ylabel('[mmol/l]');
 xlabel('Cas [min]');
