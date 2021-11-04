@@ -20,11 +20,22 @@ logic = dat_sensor(:,1) > 400;
 dat_s = dat_sensor(logic,:);
 
 %% set parameters
+global Ag
+global TI
+global kI
+global VI
+global S1b
+global S2b
+global Ib
+global Si
+global p2
+global Vg
+global Gb
+global Sg
+global Td
+
 Ag = 0.95;
 %id
-Td = 33.474;
-Sg = 0.032;
-load('identified1.mat');
 
 TI = 44.55;
 kI = 0.1645;
@@ -38,26 +49,24 @@ Si = 0.00159;
 p2 = 0.0106;
 Vg = 1.467;
 Gb = 153;
+load('identified');
 s1 = sim('bergman');
-
-time = s1.time(4001:end);
-G = s1.G(4001:end)/18;
-I = s1.I(4001:end);
-X = s1.X(4001:end);
-v = s1.v(4001:end);
-int = s1.int(4001:end);
-d = s1.d(4001:end);
+load('identified1');
+s2 = sim('bergman');
+Td = 33.474;
+Sg = 0.032;
+s3 = sim('bergman');
 
 %% visualize
 figure(1)
-title('Koncentracia inzulinu a rychlost podavania inzulinu')
+title('Koncentracia inzulinu [porovnanie]')
 hold on
 xlim([400,1400])
 xlabel('Cas [min]');
 ylabel('[mg/kg/min]');
 yyaxis left
 figure(2)
-title('Rychlost vstrebavania glukozy a podavania sacharidov')
+title('Rychlost vstrebavania glukozy [porovnanie]')
 hold on
 xlim([400,1400])
 xlabel('Cas [min]');
@@ -66,25 +75,22 @@ yyaxis left
 figure(3)
 hold on
 xlim([400,1400])
-title('Glykemia');
+title('Glykemia [porovnanie]');
 xlabel('Cas [min]');
 ylabel('[mmol/l]');
 
-
 figure(1)
-plot(time, I);
-yyaxis right
-plot(time, v);
-ylabel("v(t) [\muU/kg/min]")
-legend('I(t)','v(t)');
+plot(s1.time, s1.I, 'r-');
+plot(s2.time, s2.I, 'g-');
+plot(s3.time, s3.I, 'b-');
+legend('Ident1','Ident2','Ucebny material');
 figure(2)
-plot(time, int);
-yyaxis right
-ylabel('[mg/kg/min]')
-plot(time, d);
-legend('Ra(t)','d(t)');
+plot(s1.time, s1.int, 'r-');
+plot(s2.time, s2.int, 'g-');
+plot(s3.time, s3.int, 'b-');
+legend('Ident1','Ident2','Ucebny material');
 figure(3)
-plot(time, G, 'k');
-plot(dat_s(:,1),dat_s(:,2), 'bo');
-plot(dat_CalBG(:,1),dat_CalBG(:,2), 'rx');
-legend('Simulacia G(t)','CGM','Glukomer');
+plot(s1.time, s1.G, 'r-');
+plot(s2.time, s2.G, 'g-');
+plot(s3.time, s3.G, 'b-);
+legend('Ident1','Ident2','Ucebny material');

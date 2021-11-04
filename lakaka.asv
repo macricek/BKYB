@@ -24,7 +24,6 @@ Ag = 0.95;
 %id
 Td = 33.474;
 Sg = 0.032;
-load('identified1.mat');
 
 TI = 44.55;
 kI = 0.1645;
@@ -46,6 +45,7 @@ I = s1.I(4001:end);
 X = s1.X(4001:end);
 v = s1.v(4001:end);
 int = s1.int(4001:end);
+product = s1.product(4001:end);
 d = s1.d(4001:end);
 
 %% visualize
@@ -72,13 +72,13 @@ ylabel('[mmol/l]');
 
 
 figure(1)
-plot(time, I);
+plot(time, int);
 yyaxis right
 plot(time, v);
 ylabel("v(t) [\muU/kg/min]")
 legend('I(t)','v(t)');
 figure(2)
-plot(time, int);
+plot(time, product);
 yyaxis right
 ylabel('[mg/kg/min]')
 plot(time, d);
