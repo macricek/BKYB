@@ -20,22 +20,11 @@ logic = dat_sensor(:,1) > 400;
 dat_s = dat_sensor(logic,:);
 
 %% set parameters
-global Ag
-global TI
-global kI
-global VI
-global S1b
-global S2b
-global Ib
-global Si
-global p2
-global Vg
-global Gb
-global Sg
-global Td
-
 Ag = 0.95;
 %id
+Td = 33.474;
+Sg = 0.032;
+load('identified1.mat');
 
 TI = 44.55;
 kI = 0.1645;
@@ -49,48 +38,44 @@ Si = 0.00159;
 p2 = 0.0106;
 Vg = 1.467;
 Gb = 153;
-load('identified');
 s1 = sim('bergman');
-load('identified1');
-s2 = sim('bergman');
-Td = 33.474;
-Sg = 0.032;
-s3 = sim('bergman');
+
+time = s1.time;
+G = s1.G(4001:end)/18;
+I = s1.I(4001:end);
+X = s1.X(4001:end);
+v = s1.v(4001:end);
+int = s1.int(4001:end);
+d = s1.d;
 
 %% visualize
 figure(1)
-title('Koncentracia inzulinu [porovnanie]')
+title('Rychlost podavania inzulinu - bolus a bazal')
 hold on
-xlim([400,1400])
 xlabel('Cas [min]');
 ylabel('[mg/kg/min]');
-yyaxis left
 figure(2)
-title('Rychlost vstrebavania glukozy [porovnanie]')
+title('Rychlost podavania sacharidov - spracovane data')
 hold on
-xlim([400,1400])
 xlabel('Cas [min]');
 ylabel('[mg/kg/min]');
-yyaxis left
 figure(3)
 hold on
-xlim([400,1400])
-title('Glykemia [porovnanie]');
+title('Glykemia - spracovane data');
 xlabel('Cas [min]');
 ylabel('[mmol/l]');
 
+
 figure(1)
-plot(s1.time, s1.I, 'r-');
-plot(s2.time, s2.I, 'g-');
-plot(s3.time, s3.I, 'b-');
-legend('Ident1','Ident2','Ucebny material');
+plot(s1.bolus);
+plot(s1.basal);
+legend('Bolus','Basal');
+ylabel("[\muU/kg/min]")
 figure(2)
-plot(s1.time, s1.int, 'r-');
-plot(s2.time, s2.int, 'g-');
-plot(s3.time, s3.int, 'b-');
-legend('Ident1','Ident2','Ucebny material');
+ylabel('[mg/kg/min]')
+plot(time, d);
+legend('d(t)');
 figure(3)
-plot(s1.time, s1.G, 'r-');
-plot(s2.time, s2.G, 'g-');
-plot(s3.time, s3.G, 'b-);
-legend('Ident1','Ident2','Ucebny material');
+plot(dat_s(:,1),dat_s(:,2), 'bo');
+plot(dat_CalBG(:,1),dat_CalBG(:,2), 'rx');
+legend('CGM','Glukomer');

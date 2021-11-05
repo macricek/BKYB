@@ -102,8 +102,8 @@ plot(s2.time, s2.int, 'g-');
 plot(s3.time, s3.int, 'b-');
 legend('Ident1','Ident2','Ucebny material');
 figure(3)
-plot(s1.time, s1.G, 'r-');
-plot(s2.time, s2.G, 'g-');
-plot(s3.time, s3.G, 'b-');
+plot(s1.time, s1.G/18, 'r-');
+plot(s2.time, s2.G/18, 'g-');
+plot(s3.time, s3.G/18, 'b-');
 legend('Ident1','Ident2','Ucebny material');
 
