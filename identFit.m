@@ -27,13 +27,13 @@ for i=1:a
         [A,B,C,D] = tf2ss([b1, b0],[a2,a1,a0]);
         xInit = [0, init/C(2)];
     
-    %try
+    try
         dat = sim('identifikacia');
         e_2 = sum(dat.e.^2);
         fit(i) = e_2;
-%     catch
-%         disp('Err');
-%         fit(i) = inf;
-%     end
+    catch
+        disp('Err');
+        fit(i) = inf;
+    end
 end
 end

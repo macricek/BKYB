@@ -20,15 +20,15 @@ global out
 global Ts
 
 out.time = tout;
-out.signals.values = tep';
+out.signals.values = tepN';
 out.signals.dimensions = 1;
 Ts = 0.01;
-init = tep(1);
+init = tepN(1);
 % ga
 numCycle = 100;                           % pocet cyklov hladania
 popSize = 50;                              % velkost  populacie - kolko retazcov naraz testujem
-Space = [ones(1,5)*-100;ones(1,5)*100];
-Amp = Space(2,:)*0.2;                          % rozsah pre aditivnu mutaciu
+Space = [[0.5 50 80 75 2];[1 80 110 100 10]];
+Amp = Space(2,:)*0.05;                          % rozsah pre aditivnu mutaciu
 
 pop = genrpop(popSize,Space);              % generovanie n- nahodnych retazcov 
 fit = identFit(pop);                      
@@ -60,4 +60,4 @@ for i=1:numCycle
     minFit
 end
 
-save(strcat("paramsFull3",".mat"),'Best','grafFit');
+save(strcat("paramsFull",".mat"),'Best','grafFit');
