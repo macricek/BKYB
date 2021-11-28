@@ -1,6 +1,6 @@
 function fit = identFit(pop)
 global init
-global out
+global outS
 global a0
 global a1
 global a2

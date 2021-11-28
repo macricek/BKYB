@@ -16,19 +16,16 @@ global b0
 global d
 global init
 global xInit
-global out
+global outS
 global Ts
 
-out.time = tout;
-out.signals.values = tep';
-out.signals.dimensions = 1;
 Ts = 0.01;
-init = tep(1);
+init = tepN(1);
 % ga
 numCycle = 100;                           % pocet cyklov hladania
 popSize = 50;                              % velkost  populacie - kolko retazcov naraz testujem
-Space = [ones(1,5)*-100;ones(1,5)*100];
-Amp = Space(2,:)*0.2;                          % rozsah pre aditivnu mutaciu
+Space = [ones(1,5)*-1000;ones(1,5)*1000];
+Amp = Space(2,:)*0.1;                          % rozsah pre aditivnu mutaciu
 
 pop = genrpop(popSize,Space);              % generovanie n- nahodnych retazcov 
 fit = identFit(pop);                      
@@ -60,4 +57,4 @@ for i=1:numCycle
     minFit
 end
 
-save(strcat("paramsFull3",".mat"),'Best','grafFit');
+save(strcat("paramsFull1",".mat"),'Best','grafFit');

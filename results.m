@@ -3,7 +3,7 @@ clear
 clc
 
 global init
-global out
+global outS
 global a0
 global a1
 global a2
@@ -17,13 +17,10 @@ global B
 global C
 global D
 load('tep.mat');
-out.time = tout;
-out.signals.values = tep';
-out.signals.dimensions = 1;
 Ts = 0.01;
-init = tep(1);
+init = tepN(1);
 
-load('paramsFull3');
+load('paramsFull1');
 a0 = Best(1);
 a1 = Best(2);
 b0 = Best(3);
