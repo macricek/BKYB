@@ -8,11 +8,11 @@ load("data_KT1.mat");
 num_of_samples = length(p0);
 t_sample = t0(2) - t0(1);
 
-train =0;
+train =1;
 freq = four(train);
 
 p0_f = movmean(p0, 50);   % smooth input
-
+%p0_f = p0;
 window_w = round(5/(freq*t_sample));    % window for analysing
 min_peak_dist = round(0.5/(freq*t_sample)); % minimum distance between peaks
 
@@ -47,7 +47,7 @@ end
 figure;
 hold on;
 heart = movmean(heart, 5);
-heart1 = heart*60; %BP/sec -> BP/min
+heart1 = heart; %BP/sec -> BP/min*60
 plot(t_hr, heart1);
 title("Tep");
 xlabel("t [s]");
@@ -58,18 +58,17 @@ global initVal
 global stepTime
 global stopTime
 global outS
-global xInit
-global init
-global A
-global B
-global C
-global D
+global tf1
+global a0
+global b0
+global num
+global den
 
 Ts = 0.01;
 t_sampleF = t_hr(2)-t_hr(1);
 tLatka = 4636.37;
 tLvzorka = find(t_hr > tLatka, 1);
-initVal = 4;
+initVal = 5.6;
 stepTime = 150;
 stopTime = 6700-4636.37;
 
@@ -78,16 +77,22 @@ tLvzorkaE = find(t_hr > tLatkaEnd, 1);
 
 tii = t_hr(tLvzorka:tLvzorkaE) - tLatka;
 h = heart(tLvzorka:tLvzorkaE);
-init = 1.6;
 outS.time = tii;
 outS.signals.values = h';
 outS.signals.dimensions = 1;
 
 if train == 0
+    
+a0 = 1;
+b0 = (initVal-4)/a0;
 % ga
-numCycle = 2;                           % pocet cyklov hladania
-popSize = 50;                              % velkost  populacie - kolko retazcov naraz testujem
-Space = [ones(1,7)*-0.10;ones(1,7)*0.10];
+numCycle = 20;                           % pocet cyklov hladania
+popSize = 50;        
+%         a1 = pop(i,1);
+%         b0 = pop(i,2);
+%         a2 = pop(i,3);
+%         b1 = pop(i,4);
+Space = [[100,1.4,0,0];[500,1.7,100,100]];
 Amp = Space(2,:)*0.1;                          % rozsah pre aditivnu mutaciu
 
 pop = genrpop(popSize,Space);              % generovanie n- nahodnych retazcov 
@@ -120,23 +125,18 @@ for i=1:numCycle
     minFit
 end
 
-save(strcat("paramsFull2",".mat"),'Best','grafFit');
-
+save(strcat("paramsFull3",".mat"),'Best','grafFit');
 else
-    load('paramsFull2');
+    load('paramsFull3');
 end
 
-a0 = Best(1);
-a1 = Best(2);
-b0 = Best(3);
-a2 = Best(4);
-b1 = Best(5);
-a3 = Best(6);
-b2 = Best(7);
-
-[A,B,C,D] = tf2ss([b2, b1, b0],[a3, a2,a1,a0]);
-xInit = [0, init/C(2), 0];
-dat = sim('identifikaciaS');
+a1 = Best(1);
+b0 = Best(2);
+a2 = Best(3);
+b1 = Best(4);
+num = [b1, b0];
+den = [a2, a1, a0];
+dat = sim('identifikaciaa');
 
 figure
 hold on
