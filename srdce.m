@@ -125,11 +125,11 @@ for i=1:numCycle
     minFit
 end
 
-save(strcat("paramsFull3",".mat"),'Best','grafFit');
+save(strcat("paramsFull2",".mat"),'Best','grafFit');
 else
-    load('paramsFull3');
+    load('paramsFull2');
 end
-
+a0 = 1;
 a1 = Best(1);
 b0 = Best(2);
 a2 = Best(3);
